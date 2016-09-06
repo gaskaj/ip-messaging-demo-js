@@ -1,15 +1,15 @@
 
 var express = require('express');
+var app = new express();
 
 var config = require('./config');
-var TokenProvider = require('./lib/tokenprovider');
-
-var app = new express();
-var tokenProvider = new TokenProvider(config);
-
-if (config.bot.twilio.ipmessaging.ipm_service_sid) {
-  console.warn('ERROR: Configuration not correct!  Please see documentation convertes');
+if (!config.bot.twilio.ipmessaging.ipm_service_sid) {
+  console.warn('ERROR: Configuration not correct!');
 }
+
+
+var TokenProvider = require('./lib/tokenprovider');
+var tokenProvider = new TokenProvider(config);
 
 app.get('/getToken', function(req, res) {
   var identity = req.query && req.query.identity;
@@ -25,4 +25,6 @@ app.get('/getToken', function(req, res) {
 
 app.use(express.static(__dirname + '/public'));
 
-app.listen(8080);
+app.set('port', (process.env.PORT || 5000));
+
+app.listen(app.get('port'));
