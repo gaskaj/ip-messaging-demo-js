@@ -1,23 +1,16 @@
 
+
 var express = require('express');
 
-var TokenProvider = require(__dirname + '/lib/tokenprovider');
-var credentials = require(__dirname + '/credentials.json');
+var config = require('./config');
+var TokenProvider = require('./lib/tokenprovider');
 
-
-// var credentials = require('./credentials.json');
-// var express = require('express');
-// var TokenProvider = require('./lib/tokenprovider');
 
 var app = new express();
-var tokenProvider = new TokenProvider(credentials);
+var tokenProvider = new TokenProvider(config);
 
-if (credentials.authToken) {
-  console.warn('WARNING: The "authToken" field is deprecated. Please use "signingKeySecret".');
-}
-
-if (credentials.instanceSid) {
-  console.warn('WARNING: The "instanceSid" field is deprecated. Please use "serviceSid".');
+if (config.bot.twilio.ipmessaging.ipm_service_sid) {
+  console.warn('ERROR: Configuration not correct!  Please see documentation convertes');
 }
 
 app.get('/getToken', function(req, res) {
