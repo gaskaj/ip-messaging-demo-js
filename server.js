@@ -1,10 +1,8 @@
 
-
 var express = require('express');
 
 var config = require('./config');
 var TokenProvider = require('./lib/tokenprovider');
-
 
 var app = new express();
 var tokenProvider = new TokenProvider(config);
